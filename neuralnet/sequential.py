@@ -40,11 +40,19 @@ class SequentialNeuralNet(object):
                       batch_size=batch_size, nb_epoch=epoch)
         printv("Done training")
 
-    def predict(self, ts_data):
-        printv("Predicting using model")
+    def predict(self, ts_data, ts_output=None):
+        printv("Predicting using model, with metric: %s"
+                % self._net.metrics_names)
         pred_output = self._net.predict(ts_data)
+        loss = None
+        if ts_output is not None:
+            loss = self._net.evaluate(ts_data, ts_output)
+            printv("===============================================")
+            printv("The loss (with metric %s) is %s"
+                    % (self._net.metrics_names, str(loss)))
+            printv("===============================================")
         printv("Predicted data like: ", pred_output[:5])
-        return pred_output
+        return (pred_output, loss)
 
     def save_net(self, out_file):
         printv("Writing neural net to file: " + out_file)

@@ -52,7 +52,7 @@ class NeuralNetRunner(object):
         tr, ts = self._format_data(df)
         with SequentialNeuralNet(self.model, self.args.modelfile) as net:
             net.train(tr)
-            predicted = pd.DataFrame(net.predict(ts.input),
+            predicted = pd.DataFrame(net.predict(ts.input, ts.output)[0],
                                      columns=self.model.output_cols)
         predicted = self.model.post_process(ts, predicted)
         printv("Predicted data like:\n", predicted[:5])
