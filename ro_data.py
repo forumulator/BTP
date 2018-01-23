@@ -1,0 +1,23 @@
+
+
+class Column(object):
+    DATETIME = "date & time"
+    TIME = "time"
+    PERM_MASS = "perm_mass"
+    PERM_TIME = "perm_time"
+    PERM_COND = "perm_cond"
+    PERM_TOTAL_FLOW = "perm_totalflow"
+    PERM_FLOWRATE = "perm_flowrate"
+    REJ_TOTAL = "reject_total"
+    BACKWASH = "backwash water"
+    RECOVERY = "recovery"
+    MEMBR_REJ_TDS = "reject_tds"
+    MEMBR_REJ_FLOWRATE = "reject_flowrate_ml"
+    MEMBR_REJ_FLOWRATE_L = "reject_flowrate_l"
+    TANK_TDS = "tank_tds"
+    MEMBR_FEED_TDS = "membr_tds"
+    MEMBR_FEED_FLOW = "membr_flow"
+    MEMBR_FEED_PRESSURE = "membr_pressure"
+    INLET_FLOW = "inlet_flow"
+    INLET_TDS = "inlet_tds"
+    ROBW = "ro / bw"
