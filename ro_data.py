@@ -4,28 +4,6 @@ def unnamed(i):
     return 'Unnamed: ' + str(i)
 
 
-col_names = {
-    'Permeate properties': 'perm_mass',
-    unnamed(3): 'perm_time',
-    unnamed(4): 'perm_cond',
-    unnamed(5): 'perm_totalflow',
-    unnamed(6): 'perm_flowrate',
-    'Total Rej': 'reject_vol',
-    'Reject water': 'reject_vol_ml',
-    'Reject water.1': 'reject_tds',
-    unnamed(11): 'recovery',
-    'Reject from membarne': 'membr_reject_tds',
-    unnamed(14): 'membr_reject_flowrate_ml',
-    unnamed(15): 'membr_reject_flowrate_l',
-    'Tank': 'tank_tds',
-    'Feed to membrane': 'membr_feed_tds',
-    unnamed(18): 'membr_feed_flow',
-    unnamed(19): 'membr_feed_pressure',
-    'Feed Inlet to recycle tank': 'inlet_flow',
-    unnamed(21): 'inlet_tds',
-}
-
-
 class Column(object):
     DATETIME = "date & time"
     TIME = "time"
@@ -51,13 +29,33 @@ class Column(object):
     TANK_TDS = "tank_tds"
     # Membrane feed params
     MEMBR_FEED_TDS = "membr_feed_tds"
-    MEMBR_FEED_FLOW = "membr_feed_flow"
+    MEMBR_FEED_FLOWRATE = "membr_feed_flow"
     MEMBR_FEED_PRESSURE = "membr_feed_pressure"
     # Inlet flow params
-    INLET_FLOW = "inlet_flow"
+    INLET_FLOWRATE = "inlet_flow"
     INLET_TDS = "inlet_tds"
 
 
+col_names = {
+    'Permeate properties': 'perm_mass',
+    unnamed(3): 'perm_time',
+    unnamed(4): 'perm_cond',
+    unnamed(5): 'perm_totalflow',
+    unnamed(6): 'perm_flowrate',
+    'Total Rej': 'reject_vol',
+    'Reject water': 'reject_vol_ml',
+    'Reject water.1': 'reject_tds',
+    unnamed(11): 'recovery',
+    'Reject from membarne': 'membr_reject_tds',
+    unnamed(14): 'membr_reject_flowrate_ml',
+    unnamed(15): 'membr_reject_flowrate_l',
+    'Tank': 'tank_tds',
+    'Feed to membrane': 'membr_feed_tds',
+    unnamed(18): 'membr_feed_flow',
+    unnamed(19): 'membr_feed_pressure',
+    'Feed Inlet to recycle tank': 'inlet_flow',
+    unnamed(21): 'inlet_tds',
+}
 # Index(['date & time', 'time',
 # 'perm_mass', 'perm_time', 'perm_cond', 'perm_totalflow', 'perm_flowrate',
 # 'backwash water', 'backwash, ',

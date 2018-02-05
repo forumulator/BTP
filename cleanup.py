@@ -62,7 +62,7 @@ class TypeProcessor(Preprocessor):
     _FLOAT_COLS = [
         Column.PERM_FLOWRATE, Column.PERM_MASS,
         Column.PERM_TIME, Column.PERM_TOTAL_FLOW,
-        Column.REJ_VOL, Column.MEMBR_FEED_FLOW,
+        Column.REJ_VOL, Column.MEMBR_FEED_FLOWRATE,
         Column.RECOVERY
     ]
     _INT_COLS = [

@@ -23,5 +23,7 @@ After rename:
 
 
 ## Basic analytics
+
 ### 1. Prelim graphing
 #### Against time:
+We plot the permeate parametrs, inlet parameters, and reject paramets against time, and note the output in graphs.
