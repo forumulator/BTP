@@ -1,6 +1,6 @@
 import pandas as pd
-import utils
-from ro_data import Column, col_names
+import preprocessing.utils as utils
+from preprocessing.ro_data import Column, col_names
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 
@@ -108,7 +108,7 @@ FILTERS = (
 )
 
 
-def basic_cleanup(df):
+def preprocess_data(df):
     print = utils.printv
     df = df.iloc[1:323]
     for processor in FILTERS:

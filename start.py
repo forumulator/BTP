@@ -1,9 +1,8 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import argparse
-from cleanup import basic_cleanup
-from basicgraph import basic_graph
-import utils
+from preprocessing.cleanup import preprocess_data
+from preprocessing.basicgraph import basic_graph
+from preprocessing import utils
 
 DATA1 = "data1.csv"
 TO_GRAPH = False
@@ -12,7 +11,7 @@ TO_GRAPH = False
 def main(args):
     df = pd.read_csv(DATA1)
     # Basic cleanup
-    df = basic_cleanup(df)
+    df = preprocess_data(df)
     if args.basic_graph or TO_GRAPH:
         basic_graph(df)
 

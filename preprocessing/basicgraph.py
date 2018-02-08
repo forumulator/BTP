@@ -1,6 +1,6 @@
-from ro_data import Column
+from preprocessing.ro_data import Column
 import matplotlib.pyplot as plt
-import utils
+import preprocessing.utils as utils
 
 
 class BasicGrapher(object):
