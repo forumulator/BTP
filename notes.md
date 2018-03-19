@@ -22,8 +22,14 @@ After rename:
 `'date & time', 'backwash water', 'backwash'`
 
 
-## Basic analytics
-
-### 1. Prelim graphing
+## Basic analytics and Prelim graphing
 #### Against time:
 We plot the permeate parametrs, inlet parameters, and reject paramets against time, and note the output in graphs.
+
+## Neutral net models
+1. Sequential Model:
+
+
+
+## Graphs
+**All graphs are present in the folder `graphs/netresults`**

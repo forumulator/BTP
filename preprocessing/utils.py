@@ -13,3 +13,7 @@ def make_print(verbose):
         if verbose:
             print(*args, **kwargs)
     return printv
+
+
+printv = print
+

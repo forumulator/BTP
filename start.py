@@ -3,6 +3,7 @@ import argparse
 from preprocessing.cleanup import preprocess_data
 from preprocessing.basicgraph import basic_graph
 from preprocessing import utils
+from neuralnet import NeuralNetRunner
 
 DATA1 = "data1.csv"
 TO_GRAPH = False
@@ -11,9 +12,16 @@ TO_GRAPH = False
 def main(args):
     df = pd.read_csv(DATA1)
     # Basic cleanup
+    utils.printv("\n### Preprocessing data ###\n")
     df = preprocess_data(df)
     if args.basic_graph or TO_GRAPH:
+        utils.printv("\n### Graphing Data ###\n")
         basic_graph(df)
+    # Make an graph the neural net
+    utils.printv("\n### Running the network ###\n")
+    runner = NeuralNetRunner()
+    runner.run(df)
+
 
 
 def parseargs():
