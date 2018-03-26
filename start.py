@@ -19,9 +19,8 @@ def main(args):
         basic_graph(df)
     # Make an graph the neural net
     utils.printv("\n### Running the network ###\n")
-    runner = NeuralNetRunner()
+    runner = NeuralNetRunner(args)
     runner.run(df)
-
 
 
 def parseargs():
@@ -37,6 +36,8 @@ def parseargs():
     parser.add_argument('-l', '--lim', dest='limit', type=int, default=-1,
                         help='Limit on the number of directories to process'
                              ' (default is all directories)')
+    parser.add_argument('--model', dest='nnmodel', type=str, default="baseline",
+                        help='Neural network model to train on (Default is baseline)')
     return parser.parse_args()
 
 
