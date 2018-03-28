@@ -5,6 +5,7 @@ from preprocessing.utils import printv
 import matplotlib.pyplot as plt
 from preprocessing.ro_data import Column
 from neuralnet.models import make_model
+import math
 
 
 INPUT_COLS = [
@@ -56,12 +57,13 @@ class NeuralNetRunner(object):
 
     def graph(self, ts_data, predicted):
         """ Plot the predicted data vs. original data """
-        fig, ax = plt.subplots(nrows=3, ncols=2)
-        plt.title("Actual vs. predicted values for neural net")
+        fig, ax = plt.subplots(nrows=int(math.ceil(len(predicted.columns) / 2)),
+                               ncols=2)
+        fig.suptitle("Actual vs. predicted values for neural net")
         for i, ax in enumerate(ax.reshape(-1)):
             if i == len(predicted.columns): break
             col_name = predicted.columns[i]
-            self._graph_column(col_name, ax, ts_data.output.iloc[:, i],
+            self._graph_column(col_name, ax, ts_data.output[:, i],
                                predicted.loc[:, col_name])
         plt.show()
 

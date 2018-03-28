@@ -25,8 +25,8 @@ class NetModel(object):
 
     def io_split(self, df):
         """ Split df into np arrays of input and output """
-        return DataIO(df.loc[:, self.input_cols],
-                      df.loc[:, self.output_cols])
+        return DataIO(df.loc[:, self.input_cols].values,
+                      df.loc[:, self.output_cols].values)
 
 
 class BaselineModel(NetModel):

@@ -37,13 +37,13 @@ class SequentialNeuralNet(object):
         """
         printv("Training netowrk for (batch: %d, epoch: %d)"
                % (batch_size, epoch))
-        self._net.fit(tr_data.input.values, tr_data.output.values,
+        self._net.fit(tr_data.input, tr_data.output,
                       batch_size=batch_size, nb_epoch=epoch)
         printv("Done training")
 
     def predict(self, ts_data):
         printv("Predicting using model")
-        pred_output = self._net.predict(ts_data.values)
+        pred_output = self._net.predict(ts_data)
         printv("Predicted data like: ", pred_output[:5])
         return pred_output
 

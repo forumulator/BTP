@@ -28,16 +28,19 @@ def parseargs():
                                                  ' of the RO dataset')
     parser.add_argument('-b', '--basic_graphs', dest="basic_graph",
                         default=False, action="store_true",
-                        help='Draw basic analytic graphs')
+                        help='draw basic analytic graphs')
     # parser.add_argument('-b')
     parser.add_argument('-v', '--verbose', dest="verbose",
                         default=False, action="store_true",
-                        help='Draw basic analytic graphs')
+                        help='verbose mode')
+    parser.add_argument('-d', '--debug', dest="debug",
+                        default=False, action="store_true",
+                        help='debug mode')
     parser.add_argument('-l', '--lim', dest='limit', type=int, default=-1,
-                        help='Limit on the number of directories to process'
+                        help='limit on the number of directories to process'
                              ' (default is all directories)')
     parser.add_argument('--model', dest='nnmodel', type=str, default="baseline",
-                        help='Neural network model to train on (Default is baseline)')
+                        help='neural network model to train on (Default is baseline)')
     return parser.parse_args()
 
 
@@ -46,4 +49,5 @@ if __name__ == "__main__":
     args = parseargs()
     # Make printv function
     utils.printv = utils.make_print(args.verbose)
+    utils.debug = args.debug
     main(args)
