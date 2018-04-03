@@ -1,4 +1,4 @@
-from preprocessing.ro_data import Column
+from config import Column
 from keras.layers import Dense
 from collections import namedtuple
 
@@ -19,14 +19,28 @@ class NetModel(object):
     """
     def __init__(self, input, output):
         self.input_cols, self.output_cols = input, output
+        self.input_act, self.output_act = 'relu', 'sigmoid'
+
+    def _add_input_layer(self, model):
+        model.add(Dense(output_dim=6, init='uniform',
+                        activation=self.input_act,
+                        input_dim=len(self.input_cols)))
+
+    def _add_output_layer(self, model):
+        model.add(Dense(output_dim=len(self.output_cols), init='uniform',
+                        activation=self.output_act))
 
     def make_net(self, model):
-        pass
+        self._add_input_layer(model)
+        self._add_output_layer(model)
 
     def io_split(self, df):
         """ Split df into np arrays of input and output """
         return DataIO(df.loc[:, self.input_cols].values,
                       df.loc[:, self.output_cols].values)
+
+    def post_process(self, ts_data, predicted):
+        return predicted
 
 
 class BaselineModel(NetModel):
@@ -44,15 +58,11 @@ class BaselineModel(NetModel):
         super().__init__(input_cols, output_cols)
 
     def make_net(self, model):
-        # Adding the input layer and the first hidden layer
-        model.add(Dense(output_dim=6, init='uniform',
-                        activation='relu', input_dim=len(self.input_cols)))
+        self._add_input_layer(model)
         # Adding the second hidden layer
         model.add(Dense(output_dim=6, init='uniform',
                         activation='relu'))
-        # Adding the output layer
-        model.add(Dense(output_dim=len(self.output_cols), init='uniform',
-                        activation='sigmoid'))
+        self._add_output_layer(model)
 
 
 class AllOutputsModel(BaselineModel):
@@ -69,9 +79,28 @@ class AllOutputsModel(BaselineModel):
         super().__init__(input_cols, output_cols)
 
 
+class Model3(AllOutputsModel):
+    OUTPUT_COLS = [
+        Column.MEMBR_REJ_FLOWRATE,
+    ]
+
+    def __init__(self):
+        super().__init__(output_cols=Model3.OUTPUT_COLS)
+
+    def make_net(self, model):
+        self._add_input_layer(model)
+        # Adding the second hidden layer
+        model.add(Dense(output_dim=15, init='uniform',
+                        activation='relu'))
+        model.add(Dense(output_dim=4, init='uniform',
+                        activation='relu'))
+        self._add_output_layer(model)
+
+
 MODELS = (
     ("Baseline", BaselineModel),
     ("AllOutput", AllOutputsModel),
+    ("model3", Model3),
 )
 
 

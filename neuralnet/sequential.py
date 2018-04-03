@@ -1,8 +1,7 @@
-import keras
 from keras.models import Sequential
-from keras.layers import Dense
 from preprocessing.utils import printv
-import time
+import time, os
+from config import MODEL_PATH
 
 
 DEFAULT_SAVE_FILE = "net.json"
@@ -11,11 +10,11 @@ OUTPUT_DIMS = 5
 
 
 class SequentialNeuralNet(object):
-    def __init__(self, model, save=False, save_file=None):
+    def __init__(self, model, save_file=None):
         # The neural net object
         self._net, self._model = Sequential(), model
         self._setup()
-        self.save, self.save_file = save, save_file
+        self.save_file = save_file
 
     def _setup(self):
         printv("Setting up sequential neural net")
@@ -48,9 +47,10 @@ class SequentialNeuralNet(object):
         return pred_output
 
     def save_net(self, out_file):
+        printv("Writing neural net to file: " + out_file)
         if not out_file:
             raise ValueError("Output file can't be null")
-        with open(out_file, "w") as out:
+        with open(os.path.join(MODEL_PATH, out_file), "w") as out:
             out.write(self._net.to_json())
 
     @staticmethod
@@ -58,6 +58,5 @@ class SequentialNeuralNet(object):
         return "net__" + str(time.time()) + ".json"
 
     def __exit__(self, exc_type, exc_value, traceback):
-        if self.save:
-            self.save_net(self.save_file if self.save_file \
-                          else SequentialNeuralNet.rand_net_filename())
+        if self.save_file:
+            self.save_net(self.save_file)

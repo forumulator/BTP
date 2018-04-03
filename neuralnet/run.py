@@ -3,9 +3,10 @@ from neuralnet.sequential import SequentialNeuralNet
 import pandas as pd
 from preprocessing.utils import printv
 import matplotlib.pyplot as plt
-from preprocessing.ro_data import Column
 from neuralnet.models import make_model
 import math
+from config import GRAPH_PATH, Column
+import os
 
 
 INPUT_COLS = [
@@ -48,7 +49,7 @@ class NeuralNetRunner(object):
         self.model = make_model(self.model_name)
         # Split data
         tr, ts = self._format_data(df)
-        with SequentialNeuralNet(self.model) as net:
+        with SequentialNeuralNet(self.model, self.args.modelfile) as net:
             net.train(tr)
             predicted = pd.DataFrame(net.predict(ts.input),
                                      columns=self.model.output_cols)
@@ -57,6 +58,7 @@ class NeuralNetRunner(object):
 
     def graph(self, ts_data, predicted):
         """ Plot the predicted data vs. original data """
+        printv("Graphing predicted values")
         fig, ax = plt.subplots(nrows=int(math.ceil(len(predicted.columns) / 2)),
                                ncols=2)
         fig.suptitle("Actual vs. predicted values for neural net")
@@ -66,10 +68,18 @@ class NeuralNetRunner(object):
             self._graph_column(col_name, ax, ts_data.output[:, i],
                                predicted.loc[:, col_name])
         plt.show()
+        # Prompt to save
+        save = self.args.graphfile if self.args.graphfile\
+            else input("Save Graph (Enter filename to save)?:")
+        if save:
+            self._save_graph(fig, self.args.graphfile)
+
+    def _save_graph(self, fig, filename):
+        printv("Saving graph to: " + filename)
+        fig.savefig(os.path.join(GRAPH_PATH, self.args.graphfile))
 
     def _graph_column(self, col_name, ax, actual, predicted):
-        printv("Graphing predicted values")
         ax.plot(actual, color='b')
         ax.plot(predicted, color='g')
         ax.set_title(col_name)
-        ax.legend(["Actual values", "Predicted values"])
+        ax.legend(["Actual values", "Predicted Values"])

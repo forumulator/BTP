@@ -1,4 +1,4 @@
-from preprocessing.ro_data import Column
+from config import Column
 import matplotlib.pyplot as plt
 import preprocessing.utils as utils
 

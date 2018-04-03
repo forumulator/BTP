@@ -7,6 +7,7 @@ from neuralnet import NeuralNetRunner
 
 DATA1 = "data1.csv"
 TO_GRAPH = False
+NOMODEL = "nomodel"
 
 
 def main(args):
@@ -17,15 +18,17 @@ def main(args):
     if args.basic_graph or TO_GRAPH:
         utils.printv("\n### Graphing Data ###\n")
         basic_graph(df)
-    # Make an graph the neural net
-    utils.printv("\n### Running the network ###\n")
-    runner = NeuralNetRunner(args)
-    runner.run(df)
+    if args.nnmodel != NOMODEL:
+        # Make an graph the neural net
+        utils.printv("\n### Running the network ###\n")
+        runner = NeuralNetRunner(args)
+        runner.run(df)
 
 
 def parseargs():
-    parser = argparse.ArgumentParser(description='Cleanup and processing'
-                                                 ' of the RO dataset')
+    parser = argparse.ArgumentParser(
+        description='Cleanup, processing,'
+                    '  training and graphing the RO dataset')
     parser.add_argument('-b', '--basic_graphs', dest="basic_graph",
                         default=False, action="store_true",
                         help='draw basic analytic graphs')
@@ -39,8 +42,14 @@ def parseargs():
     parser.add_argument('-l', '--lim', dest='limit', type=int, default=-1,
                         help='limit on the number of directories to process'
                              ' (default is all directories)')
-    parser.add_argument('--model', dest='nnmodel', type=str, default="baseline",
-                        help='neural network model to train on (Default is baseline)')
+    parser.add_argument(
+        '--model', dest='nnmodel', type=str, default="baseline",
+        help='neural network model to train on (Default is `baseline\', '
+             '`nomodel\' to skip neural nets)')
+    parser.add_argument('--save-model', dest='modelfile', type=str, default=None,
+                        help='Save model to file MODELFILE')
+    parser.add_argument('--save-graph', dest='graphfile', type=str, default=None,
+                        help='Save graph to file GRAPHFILE')
     return parser.parse_args()
 
 

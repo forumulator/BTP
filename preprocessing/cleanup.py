@@ -1,6 +1,6 @@
 import pandas as pd
-import preprocessing.utils as utils
-from preprocessing.ro_data import Column, col_names
+from preprocessing.utils import printv
+from config import Column, col_names
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 
@@ -12,7 +12,9 @@ class Preprocessor(object):
     def process(self, df):
         df = self._processor(df)
         if self.verbose:
-            print(df)
+            printv("Values after passing through %s like: "
+                  % self.__class__.__name__)
+            printv(df[:5])
         return df
 
     def _processor(self, df):
@@ -104,22 +106,22 @@ class Normalizer(Preprocessor):
 FILTERS = (
     ColumnFilter(), NanValueFilter(),
     TypeProcessor(), NanValueFilter(method='bfill'),
-    Normalizer()
+    Normalizer(verbose=True)
 )
 
 
 def preprocess_data(df):
-    print = utils.printv
+    print = printv
     df = df.iloc[1:323]
     for processor in FILTERS:
-        utils.printv("Applying filter: %s"
+        printv("Applying filter: %s"
                      % processor.__class__.__name__)
         df = processor.process(df)
         # print(np.isnan(df.any()), np.isfinite(df.all()))
         df.to_csv("temp.csv")
 
-    print("Filters applied. Final of columns:")
-    print(df.columns)
-    print("\nData looks like:\n", df[:3])
-    print()
+    printv("Filters applied. Final columns:")
+    printv(df.columns)
+    printv("\nFinal cleaned up data looks like:\n", df[:3])
+    printv()
     return df

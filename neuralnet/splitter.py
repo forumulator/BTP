@@ -1,4 +1,4 @@
-from preprocessing.ro_data import Column
+from config import Column
 from sklearn.model_selection import train_test_split
 
 
