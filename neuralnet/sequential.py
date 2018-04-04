@@ -50,6 +50,7 @@ class SequentialNeuralNet(object):
         printv("Writing neural net to file: " + out_file)
         if not out_file:
             raise ValueError("Output file can't be null")
+        out_file += ".json"
         with open(os.path.join(MODEL_PATH, out_file), "w") as out:
             out.write(self._net.to_json())
 

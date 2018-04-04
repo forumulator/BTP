@@ -70,7 +70,7 @@ class NeuralNetRunner(object):
         plt.show()
         # Prompt to save
         save = self.args.graphfile if self.args.graphfile\
-            else input("Save Graph (Enter filename to save)?:")
+            else input("Save Graph (Enter filename to, blank to skip)?:")
         if save:
             self._save_graph(fig, self.args.graphfile)
 

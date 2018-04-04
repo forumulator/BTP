@@ -33,3 +33,6 @@ We plot the permeate parametrs, inlet parameters, and reject paramets against ti
 
 ## Graphs
 **All graphs are present in the folder `graphs/netresults`**
+1. Inital io = ((Inlet flowrate, inlet tds), (permeate flowrate, permeate cond)) graph. Since the values are nearly identical,
+	the graph is very 
+2. 
