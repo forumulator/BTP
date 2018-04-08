@@ -26,10 +26,11 @@ DEFAULT_MODEL = "Baseline"
 
 
 class NeuralNetRunner(object):
-    def __init__(self, args, save=False, filename=None):
+    def __init__(self, args, save=False, filename=None, show_graph=True):
         self.args = args
         self.model_name, self.model = args.nnmodel, None
         self.save, self.filename = save, filename
+        self.show_graph = show_graph
 
     def _format_data(self, df):
         """ Needs already cleaned up data """
@@ -53,8 +54,10 @@ class NeuralNetRunner(object):
             net.train(tr)
             predicted = pd.DataFrame(net.predict(ts.input),
                                      columns=self.model.output_cols)
+        predicted = self.model.post_process(ts, predicted)
         printv("Predicted data like:\n", predicted[:5])
-        self.graph(ts, predicted)
+        if self.show_graph:
+            self.graph(ts, predicted)
 
     def graph(self, ts_data, predicted):
         """ Plot the predicted data vs. original data """
@@ -70,13 +73,15 @@ class NeuralNetRunner(object):
         plt.show()
         # Prompt to save
         save = self.args.graphfile if self.args.graphfile\
-            else input("Save Graph (Enter filename to, blank to skip)?:")
+            else input("Save Graph (Enter filename to save, blank to skip)?: ")
         if save:
-            self._save_graph(fig, self.args.graphfile)
+            self._save_graph(fig, save)
 
     def _save_graph(self, fig, filename):
+        if not filename.endswith(".png"):
+            filename += ".png"
         printv("Saving graph to: " + filename)
-        fig.savefig(os.path.join(GRAPH_PATH, self.args.graphfile))
+        fig.savefig(os.path.join(GRAPH_PATH, filename))
 
     def _graph_column(self, col_name, ax, actual, predicted):
         ax.plot(actual, color='b')

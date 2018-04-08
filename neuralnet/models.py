@@ -79,13 +79,13 @@ class AllOutputsModel(BaselineModel):
         super().__init__(input_cols, output_cols)
 
 
-class Model3(AllOutputsModel):
+class RejectFlowrate(AllOutputsModel):
     OUTPUT_COLS = [
         Column.MEMBR_REJ_FLOWRATE,
     ]
 
     def __init__(self):
-        super().__init__(output_cols=Model3.OUTPUT_COLS)
+        super().__init__(output_cols=RejectFlowrate.OUTPUT_COLS)
 
     def make_net(self, model):
         self._add_input_layer(model)
@@ -97,10 +97,44 @@ class Model3(AllOutputsModel):
         self._add_output_layer(model)
 
 
+class RejectTDS(AllOutputsModel):
+    OUTPUT_COLS = [
+        Column.MEMBR_REJ_TDS,
+    ]
+
+    def __init__(self):
+        super().__init__(output_cols=RejectTDS.OUTPUT_COLS)
+
+    def make_net(self, model):
+        self._add_input_layer(model)
+        # Adding the second hidden layer
+        model.add(Dense(output_dim=6, init='uniform',
+                        activation='relu'))
+        model.add(Dense(output_dim=4, init='uniform',
+                        activation='relu'))
+        self._add_output_layer(model)
+
+
+class TankTDS(AllOutputsModel):
+    OUTPUT_COLS = [
+        Column.TANK_TDS,
+    ]
+
+    def __init__(self):
+        super().__init__(output_cols=TankTDS.OUTPUT_COLS)
+
+    def make_net(self, model):
+        self._add_input_layer(model)
+        # Adding the second hidden layer
+        model.add(Dense(output_dim=6, init='uniform',
+                        activation='sigmoid'))
+        model.add(Dense(output_dim=4, init='uniform',
+                        activation='sigmoid'))
+        self._add_output_layer(model)
+
+
 MODELS = (
-    ("Baseline", BaselineModel),
-    ("AllOutput", AllOutputsModel),
-    ("model3", Model3),
+    BaselineModel, AllOutputsModel, RejectFlowrate, RejectTDS, TankTDS
 )
 
 
@@ -108,7 +142,7 @@ def make_model(model_name):
     """ Factory function for the model, based on the model
         name
     """
-    for name, ModelCls in MODELS:
-        if name.lower() == model_name.lower():
+    for ModelCls in MODELS:
+        if ModelCls.__name__.lower() == model_name.lower():
             return ModelCls()
-    return None
+    raise ValueError("Invalid model name: " + model_name)
