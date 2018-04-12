@@ -28,6 +28,8 @@ We plot the permeate parametrs, inlet parameters, and reject paramets against ti
 
 ## Neutral net models
 1. Sequential Model:
+a. Baseline
+b. 
 
 
 

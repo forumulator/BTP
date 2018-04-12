@@ -3,6 +3,7 @@ import os
 
 MODEL_PATH = "models"
 GRAPH_PATH = os.path.join("graphs", "netresults")
+DATAFILE = "data2.csv"
 
 
 def unnamed(i):
@@ -52,14 +53,14 @@ col_names = {
     'Reject water.1': 'reject_tds',
     unnamed(11): 'recovery',
     'Reject from membarne': 'membr_reject_tds',
-    unnamed(14): 'membr_reject_flowrate_ml',
-    unnamed(15): 'membr_reject_flowrate_l',
+    unnamed(14): 'membr_reject_flowrate_l',
+    # unnamed(15): 'membr_reject_flowrate_l',
     'Tank': 'tank_tds',
     'Feed to membrane': 'membr_feed_tds',
-    unnamed(18): 'membr_feed_flow',
-    unnamed(19): 'membr_feed_pressure',
+    unnamed(17): 'membr_feed_flow',
+    unnamed(18): 'membr_feed_pressure',
     'Feed Inlet to recycle tank': 'inlet_flow',
-    unnamed(21): 'inlet_tds',
+    unnamed(20): 'inlet_tds',
 }
 
 # Index(['date & time', 'time',

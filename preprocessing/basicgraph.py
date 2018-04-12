@@ -34,6 +34,7 @@ class BasicGrapher(object):
             self.df.set_index(Column.TIME)[subplots[i][0]]\
                 .plot(ax=ax)
             ax.set_title(subplots[i][1])
+            ax.set_ylim(0, 5)
 
     def draw_ratio_graphs(self):
         self.df['io_ratio'] = self.df[Column.MEMBR_REJ_FLOWRATE] \

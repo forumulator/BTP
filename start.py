@@ -4,14 +4,16 @@ from preprocessing.cleanup import preprocess_data
 from preprocessing.basicgraph import basic_graph
 from preprocessing import utils
 from neuralnet import NeuralNetRunner
+from config import DATAFILE as datafile
 
-DATA1 = "data1.csv"
 TO_GRAPH = False
 NOMODEL = "nomodel"
 
 
 def main(args):
-    df = pd.read_csv(DATA1)
+    df = pd.read_csv(datafile)
+    utils.printv("Columns before cleanup\n" + str(df.columns))
+    # utils.printv("Column: REJ_TDS\n" + str(df['Reject water.1']))
     # Basic cleanup
     utils.printv("\n### Preprocessing data ###\n")
     df = preprocess_data(df)
