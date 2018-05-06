@@ -91,6 +91,8 @@ class TypeProcessor(Preprocessor):
 
 
 class Normalizer(Preprocessor):
+    UNNORM_COLUMNS = [ Column.TIME ]
+
     def __init__(self, verbose=False):
         super().__init__(verbose)
 
@@ -98,8 +100,10 @@ class Normalizer(Preprocessor):
         return self._scale_columns(df)
 
     def _scale_columns(self, df):
-        df = pd.DataFrame(MinMaxScaler().fit_transform(df),
-                          columns=df.columns)
+        cols = df.columns.difference(Normalizer.UNNORM_COLUMNS)
+        df[cols] = pd.DataFrame(MinMaxScaler()
+                                .fit_transform(df[cols]),
+                          columns=cols)
         return df
 
 
