@@ -33,6 +33,8 @@ class BasicGrapher(object):
             if i == len(subplots): break
             self.df.set_index(Column.TIME)[subplots[i][0]]\
                 .plot(ax=ax)
+            ax.set_xlabel('Time(min)')
+            ax.set_ylabel('Normalized values')
             ax.set_title(subplots[i][1])
             ax.set_ylim(0, 5)
 
