@@ -22,7 +22,7 @@ OUTPUT_COLS = [
 ]
 TS_SIZE = 0.15
 
-DEFAULT_MODEL = "Baseline"
+DEFAULT_MODEL = "BaselineModel"
 
 
 class NeuralNetRunner(object):

@@ -43,7 +43,7 @@ def parseargs():
                         help='limit on the number of directories to process'
                              ' (default is all directories)')
     parser.add_argument(
-        '--model', dest='nnmodel', type=str, default="baseline",
+        '--model', dest='nnmodel', type=str, default="baselinemodel",
         help='neural network model to train on (Default is `baseline\', '
              '`nomodel\' to skip neural nets)')
     parser.add_argument('--save-model', dest='modelfile', type=str, default=None,

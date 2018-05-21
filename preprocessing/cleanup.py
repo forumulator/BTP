@@ -100,10 +100,12 @@ class Normalizer(Preprocessor):
         return self._scale_columns(df)
 
     def _scale_columns(self, df):
-        cols = df.columns.difference(Normalizer.UNNORM_COLUMNS)
-        df[cols] = pd.DataFrame(MinMaxScaler()
-                                .fit_transform(df[cols]),
-                          columns=cols)
+        # cols = df.columns.difference(Normalizer.UNNORM_COLUMNS)
+        # df[cols] = pd.DataFrame(MinMaxScaler()
+        #                         .fit_transform(df[cols]),
+        #                   columns=cols)
+        df = pd.DataFrame(MinMaxScaler().fit_transform(df),
+                          columns=df.columns)
         return df
 
 
