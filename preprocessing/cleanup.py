@@ -115,11 +115,12 @@ class Normalizer(Preprocessor):
         return df
 
     def _scale_columns(self, df):
-        df = self._fix_rej_tds(df)
-        cols = df.columns.difference(Normalizer.UNNORM_COLUMNS)
-        df[cols] = pd.DataFrame(MinMaxScaler()
-                                .fit_transform(df[cols]),
-                                columns=cols)
+        # cols = df.columns.difference(Normalizer.UNNORM_COLUMNS)
+        # df[cols] = pd.DataFrame(MinMaxScaler()
+        #                         .fit_transform(df[cols]),
+        #                   columns=cols)
+        df = pd.DataFrame(MinMaxScaler().fit_transform(df),
+                          columns=df.columns)
         return df
 
 
