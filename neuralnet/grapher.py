@@ -6,6 +6,8 @@ import os, math
 
 class Grapher:
     """ To graph the values output from the neural net """
+    def __init__(self, graphfile):
+        self.graphfile = graphfile
 
     def graph(self, ts_data, predicted):
         """ Plot the predicted data vs. original data """
@@ -20,12 +22,13 @@ class Grapher:
                                predicted.loc[:, col_name])
         plt.show()
         # Prompt to save
-        save = self.args.graphfile if self.args.graphfile\
+        save = self.graphfile if self.graphfile\
             else input("Save Graph (Enter filename to save, blank to skip)?: ")
         if save:
             self._save_graph(fig, save)
 
     def _save_graph(self, fig, filename):
+        """ Save fig to filename """
         if not filename.endswith(".png"):
             filename += ".png"
         printv("Saving graph to: " + filename)
