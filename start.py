@@ -5,6 +5,7 @@ from preprocessing.basicgraph import basic_graph
 from preprocessing import utils
 from neuralnet import NeuralNetRunner
 from config import DATAFILE as datafile
+from neuralnet.comparator import ModelComparator
 
 TO_GRAPH = False
 NOMODEL = "nomodel"
@@ -17,6 +18,10 @@ def main(args):
     # Basic cleanup
     utils.printv("\n### Preprocessing data ###\n")
     df = preprocess_data(df)
+    if args.model_list:
+        comp = ModelComparator(args.model_list)
+        comp.compare(df)
+        return
     if args.basic_graph or TO_GRAPH:
         utils.printv("\n### Graphing Data ###\n")
         basic_graph(df)
@@ -52,6 +57,8 @@ def parseargs():
                         help='Save model to file MODELFILE')
     parser.add_argument('--save-graph', dest='graphfile', type=str, default=None,
                         help='Save graph to file GRAPHFILE')
+    parser.add_argument('--compare', dest="model_list", nargs="+", default=[],
+                        help='names of models to compare')
     return parser.parse_args()
 
 

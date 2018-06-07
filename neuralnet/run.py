@@ -27,9 +27,14 @@ DEFAULT_MODEL = "BaselineModel"
 
 
 class NeuralNetRunner(object):
-    def __init__(self, args, show_graph=True):
+    def __init__(self, args, nnmodel=None, modelfile=None,
+                 save_model=True, show_graph=True):
         self.args = args
-        self.model_name, self.model = args.nnmodel, None
+        self.model_name = args.nnmodel if not nnmodel else nnmodel
+        self.model = None
+        self.modelfile = None
+        if save_model:
+            self.modelfile = args.modelfile
         self.show_graph = show_graph
 
     def _format_data(self, df):
@@ -50,12 +55,13 @@ class NeuralNetRunner(object):
         self.model = make_model(self.model_name)
         # Split data
         tr, ts = self._format_data(df)
-        with SequentialNeuralNet(self.model, self.args.modelfile) as net:
+        with SequentialNeuralNet(self.model, self.modelfile) as net:
             net.train(tr)
-            predicted = pd.DataFrame(net.predict(ts.input, ts.output)[0],
-                                     columns=self.model.output_cols)
+            output, loss = net.predict(ts.input, ts.output)
+            predicted = pd.DataFrame(output, columns=self.model.output_cols)
         predicted = self.model.post_process(ts, predicted)
         printv("Predicted data like:\n", predicted[:5])
         if self.show_graph:
             Grapher(self.args.graphfile).graph(ts, predicted)
+        return loss
 
