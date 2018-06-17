@@ -24,13 +24,14 @@ OUTPUT_COLS = [
 TS_SIZE = 0.15
 
 DEFAULT_MODEL = "BaselineModel"
-
+RNN_PREFIX = "rnn"
 
 class NeuralNetRunner(object):
     def __init__(self, args, nnmodel=None, modelfile=None,
                  save_model=True, show_graph=True):
         self.args = args
         self.model_name = args.nnmodel if not nnmodel else nnmodel
+        self.is_rnn = self.model_name.startswith(RNN_PREFIX)
         self.model = None
         self.modelfile = None
         if save_model:
@@ -41,7 +42,7 @@ class NeuralNetRunner(object):
         """ Needs already cleaned up data """
         printv("Splitting data into train and test")
         # Split into training and test data.
-        tr, ts = Splitter(TS_SIZE).split(df)
+        tr, ts = Splitter(TS_SIZE, shuffle=(not self.is_rnn)).split(df)
         # Split columns into input and output
         tr, ts = self.model.io_split(tr), self.model.io_split(ts)
         printv("Data split with element count: (train, test) = (%d, %d)"
@@ -55,6 +56,7 @@ class NeuralNetRunner(object):
         self.model = make_model(self.model_name)
         # Split data
         tr, ts = self._format_data(df)
+        print(tr.input.shape); input("HEre:")
         with SequentialNeuralNet(self.model, self.modelfile) as net:
             net.train(tr)
             output, loss = net.predict(ts.input, ts.output)
