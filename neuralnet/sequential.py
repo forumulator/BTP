@@ -27,7 +27,9 @@ class SequentialNeuralNet(object):
 
     def compile(self):
         printv("Compiling network")
-        self._net.compile(optimizer='adam', loss='mean_squared_error')
+        self._net.compile(optimizer='adam', loss='mean_squared_error',
+                          metrics=['mse', 'mae'])
+        printv("Metric names: %s" % str(self._net.metrics_names))
 
     def train(self, tr_data, batch_size=10, epoch=100):
         """ tr_data is a names tuple netbuilder.DataIO, which contains
