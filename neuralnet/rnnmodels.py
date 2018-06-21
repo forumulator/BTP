@@ -2,10 +2,11 @@ from config import Column
 from keras.layers import Dense, LSTM
 from collections import namedtuple
 from neuralnet.models import NetModel, DataIO
+from neuralnet.annmodels import BaselineModel
 
 DataIO = namedtuple('DataIO', 'input output')
 
-class RnnModel(NetModel):
+class TankTdsFinal(NetModel):
     INPUT_COLS = [
         Column.TIME, Column.INLET_FLOWRATE,
         Column.INLET_TDS
@@ -36,3 +37,12 @@ class RnnModel(NetModel):
         # model.add(LSTM(50, input_shape=(train_X.shape[1], train_X.shape[2])))
         # model.add(Dense(1))
         # model.compile(loss='mae', optimizer='adam')
+
+class RnnBaseline(BaselineModel):
+    OUTPUT_COLS = [
+        Column.TANK_TDS
+    ]
+
+    def __init__(self, input_cols=BaselineModel.INPUT_COLS,
+                 output_cols=OUTPUT_COLS):
+        super().__init__(input_cols, output_cols)

@@ -1,6 +1,7 @@
 from config import Column
 from keras.layers import Dense
 from neuralnet.models import NetModel
+# from neuralnet.annmodels import BaselineModel
 
 class BaselineModel(NetModel):
     INPUT_COLS = [

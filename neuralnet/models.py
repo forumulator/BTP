@@ -40,12 +40,12 @@ def make_model(model_name):
     """ Factory function for the model, based on the model
         name
     """
-    from neuralnet.rnnmodels import RnnModel
+    from neuralnet.rnnmodels import RnnBaseline, TankTdsFinal
     from neuralnet.annmodels import BaselineModel, \
             AllOutputsModel, RejectFlowrate, RejectTDS, TankTDS
     MODELS = (
         BaselineModel, AllOutputsModel, RejectFlowrate, RejectTDS, TankTDS, 
-        RnnModel
+        RnnBaseline, TankTdsFinal
     )
     for ModelCls in MODELS:
         if ModelCls.__name__.lower() == model_name.lower():
